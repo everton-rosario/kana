@@ -7,6 +7,7 @@ package br.com.kana.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ public class MemorizeFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+
+    private ViewPager mPager;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -41,7 +44,11 @@ public class MemorizeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_memorizar, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_carousel, container, false);
+
+        mPager = (ViewPager) rootView.findViewById(R.id.pager);
+        //mPager.setAdapter();
+
         return rootView;
     }
 
