@@ -2,7 +2,7 @@ package br.com.kana;
 
 import android.app.Application;
 import android.content.res.AssetManager;
-import android.content.res.TypedArray;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import br.com.kana.model.KanaSymbol;
 
@@ -21,6 +22,8 @@ import br.com.kana.model.KanaSymbol;
 public class KanaApplication extends Application {
 
     private List<KanaSymbol> kanas;
+    private TextToSpeech tts;
+    private boolean japanseseAvailable = false;
 
     @Override
     public void onCreate() {
@@ -32,8 +35,32 @@ public class KanaApplication extends Application {
         }.getType());
 
 
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+
+                    int result = tts.setLanguage(Locale.JAPANESE);
+
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "This Language is not supported");
+                    } else {
+                        japanseseAvailable = true;
+                    }
+
+                } else {
+                    Log.e("TTS", "Initilization Failed!");
+                }
+            }
+        });
+
         Log.d("KanaApplication", kanas.toString());
 
+    }
+
+    public void speak(String something) {
+        tts.speak(something, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     public String loadAppData() {

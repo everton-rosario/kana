@@ -28,7 +28,7 @@ import br.com.kana.model.KanaSymbol;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MemorizeFragment extends Fragment {
+public class MemorizeFragment extends BaseFragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -100,7 +100,7 @@ public class MemorizeFragment extends Fragment {
         }
     }
 
-    public static class CardFragment extends Fragment {
+    public static class CardFragment extends BaseFragment {
 
         private int step;
         private List<KanaSymbol> kanas;
@@ -129,6 +129,12 @@ public class MemorizeFragment extends Fragment {
 
             TextView symbol = (TextView) rootView.findViewById(R.id.symbol);
             symbol.setText(kanas.get(step).getKatakana());
+            symbol.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getApp().speak(kanas.get(step).getKatakana());
+                }
+            });
 
             TextView romaji = (TextView) rootView.findViewById(R.id.romaji);
             romaji.setText(kanas.get(step).getRomaji());
