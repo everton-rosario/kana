@@ -54,4 +54,7 @@ public class KanaApplication extends Application {
         }
     }
 
+    public List<KanaSymbol> getKatakanas() {
+        return kanas;
+    }
 }
