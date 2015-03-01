@@ -1,4 +1,4 @@
-package br.com.kana.kana;
+package br.com.kana.
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

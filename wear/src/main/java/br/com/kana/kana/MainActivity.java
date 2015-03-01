@@ -1,4 +1,4 @@
-package br.com.kana.kana;
+package br.com.kana.
 
 import android.app.Activity;
 import android.os.Bundle;
