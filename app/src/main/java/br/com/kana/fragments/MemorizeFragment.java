@@ -5,24 +5,20 @@ package br.com.kana.fragments;
  */
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.kana.KanaApplication;
 import br.com.kana.R;
-import br.com.kana.adapters.BindingAdapter;
 import br.com.kana.model.KanaSymbol;
 
 /**
@@ -74,7 +70,9 @@ public class MemorizeFragment extends BaseFragment {
     }
 
 
-
+    /*
+     * Adapter para percorrer os itens disponiveis no Pager
+     */
     public static class KatakanaAdapter extends FragmentPagerAdapter {
 
         private final List<KanaSymbol> kanas;
@@ -86,7 +84,7 @@ public class MemorizeFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            return CardFragment.newInstance(kanas, position);
+            return CardFragment.newInstance(position);
         }
 
         @Override
@@ -100,20 +98,24 @@ public class MemorizeFragment extends BaseFragment {
         }
     }
 
+
+    /*
+     * Fragment que representa cada card dentro do ViewPager
+     */
     public static class CardFragment extends BaseFragment {
 
         private int step;
-        private List<KanaSymbol> kanas;
 
-
-
-        public CardFragment(List<KanaSymbol> kanas, int step) {
-            this.step = step;
-            this.kanas = kanas;
+        public CardFragment() {
         }
 
-        public static CardFragment newInstance(List<KanaSymbol> kanas, int step) {
-            CardFragment fragment = new CardFragment(kanas, step);
+        public static CardFragment newInstance(int step) {
+
+            CardFragment fragment = new CardFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("step", step);
+            fragment.setArguments(bundle);
 
             return fragment;
         }
@@ -125,19 +127,22 @@ public class MemorizeFragment extends BaseFragment {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+            this.step = getArguments().getInt("step");
+
             View rootView = inflater.inflate(R.layout.fragment_card, container, false);
 
             TextView symbol = (TextView) rootView.findViewById(R.id.symbol);
-            symbol.setText(kanas.get(step).getKatakana());
+            symbol.setText(getApp().getKatakanas().get(step).getKatakana());
             symbol.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getApp().speak(kanas.get(step).getKatakana());
+                    getApp().speak(getApp().getKatakanas().get(step).getKatakana());
                 }
             });
 
             TextView romaji = (TextView) rootView.findViewById(R.id.romaji);
-            romaji.setText(kanas.get(step).getRomaji());
+            romaji.setText(getApp().getKatakanas().get(step).getRomaji());
 
             return rootView;
         }

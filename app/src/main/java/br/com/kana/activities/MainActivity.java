@@ -14,7 +14,8 @@ import br.com.kana.fragments.NavigationDrawerFragment;
 import br.com.kana.R;
 
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity
+        extends BaseActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.res.AssetManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -45,6 +46,7 @@ public class KanaApplication extends Application {
                     if (result == TextToSpeech.LANG_MISSING_DATA
                             || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
+                        Toast.makeText(getApplicationContext(), "Text To Speech Japones não disponivel", Toast.LENGTH_SHORT).show();
                     } else {
                         japanseseAvailable = true;
                     }
