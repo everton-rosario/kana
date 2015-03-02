@@ -4,20 +4,20 @@ package br.com.kana.model;
  * Created by aristides on 02/03/15.
  */
 public class QuestionOptions {
-    private String value;
+    private String text;
     private boolean correct;
 
-    public QuestionOptions(String value, boolean correct) {
-        this.value = value;
+    public QuestionOptions(String text, boolean correct) {
+        this.text = text;
         this.correct = correct;
     }
 
-    public String getValue() {
-        return value;
+    public String getText() {
+        return text;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public boolean isCorrect() {

@@ -15,11 +15,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import br.com.kana.R;
 import br.com.kana.model.Exam;
 import br.com.kana.model.KanaSymbol;
+import br.com.kana.model.Question;
+import br.com.kana.model.QuestionOptions;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -49,6 +54,28 @@ public class ExamFragment extends BaseFragment {
 
     private Exam createExam() {
         Exam exam = new Exam();
+        List<KanaSymbol> symbols = new ArrayList<KanaSymbol>(getApp().getKatakanas());
+        //create exam with 10 questions
+        Random rnd = new Random();
+        for (int i =0 ; i < 10; i++ ){
+            Question q = new Question();
+            //pick a symbol
+            KanaSymbol answer = symbols.remove(rnd.nextInt(symbols.size()));
+            q.setText(answer.getKatakana());
+
+            //add the correct answer
+            q.getQuestionOptions().add(new QuestionOptions(answer.getRomaji(), true));
+
+            //add the other wrong options
+            for (int i2 = 0 ; i2 < 10; i2++ ){
+                KanaSymbol wrongAnswer = symbols.remove(rnd.nextInt(symbols.size()));
+                q.getQuestionOptions().add(new QuestionOptions(wrongAnswer.getRomaji(), false));
+            }
+
+            //shuffle the list of answer
+            Collections.shuffle(q.getQuestionOptions());
+        }
+
         return exam;
     }
 
