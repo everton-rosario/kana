@@ -20,7 +20,7 @@
     <TextView android:id="@+id/symbol"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="ア"
+        android:text="ヒョ"
         android:textSize="@dimen/symbol_size"
         android:gravity="center"/>
 

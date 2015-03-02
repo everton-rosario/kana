@@ -48,9 +48,15 @@ public class MainActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, MemorizeFragment.newInstance(position + 1))
-                .commit();
+        if (position == 0){
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, MemorizeFragment.newInstance(position + 1))
+                    .commit();
+        } else if (position == 1){
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, MemorizeFragment.newInstance(position + 1))
+                    .commit();
+        }
     }
 
     public void onSectionAttached(int number) {

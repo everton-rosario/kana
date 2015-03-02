@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,19 +17,20 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.kana.KanaApplication;
 import br.com.kana.R;
+import br.com.kana.model.Exam;
 import br.com.kana.model.KanaSymbol;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MemorizeFragment extends BaseFragment {
+public class ExamFragment extends BaseFragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private Exam exam;
 
     private ViewPager mPager;
 
@@ -38,15 +38,21 @@ public class MemorizeFragment extends BaseFragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static MemorizeFragment newInstance(int sectionNumber) {
-        MemorizeFragment fragment = new MemorizeFragment();
+    public static ExamFragment newInstance(int sectionNumber) {
+        ExamFragment fragment = new ExamFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
+
         return fragment;
     }
 
-    public MemorizeFragment() {
+    private Exam createExam() {
+        Exam exam = new Exam();
+        return exam;
+    }
+
+    public ExamFragment() {
     }
 
     @Override
@@ -56,6 +62,8 @@ public class MemorizeFragment extends BaseFragment {
 
         mPager = (ViewPager) rootView.findViewById(R.id.pager);
         mPager.setAdapter(new KatakanaAdapter(getActivity().getSupportFragmentManager(), getApp().getKatakanas()));
+
+        exam = createExam();
 
         return rootView;
     }
@@ -80,7 +88,7 @@ public class MemorizeFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            return CardFragment.newInstance(position);
+            return QuestionFragment.newInstance(position);
         }
 
         @Override
@@ -98,16 +106,16 @@ public class MemorizeFragment extends BaseFragment {
     /*
      * Fragment que representa cada card dentro do ViewPager
      */
-    public static class CardFragment extends BaseFragment {
+    public static class QuestionFragment extends BaseFragment {
 
         private int step;
 
-        public CardFragment() {
+        public QuestionFragment() {
         }
 
-        public static CardFragment newInstance(int step) {
+        public static QuestionFragment newInstance(int step) {
 
-            CardFragment fragment = new CardFragment();
+            QuestionFragment fragment = new QuestionFragment();
 
             Bundle bundle = new Bundle();
             bundle.putInt("step", step);

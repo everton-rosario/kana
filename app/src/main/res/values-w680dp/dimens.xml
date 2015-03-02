@@ -1,5 +1,5 @@
 <resources>
 
-    <dimen name="symbol_size">650sp</dimen>
+    <dimen name="symbol_size">300sp</dimen>
 
 </resources>
