@@ -35,7 +35,7 @@ public class ExamFragment extends BaseFragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private Exam exam;
+    private static Exam exam;
 
     private ViewPager mPager;
 
@@ -67,8 +67,11 @@ public class ExamFragment extends BaseFragment {
             q.getQuestionOptions().add(new QuestionOptions(answer.getRomaji(), true));
 
             //add the other wrong options
-            for (int i2 = 0 ; i2 < 10; i2++ ){
-                KanaSymbol wrongAnswer = symbols.remove(rnd.nextInt(symbols.size()));
+            for (int i2 = 0 ; i2 < 4; i2++ ){
+                KanaSymbol wrongAnswer = getApp().getKatakanas().get(rnd.nextInt(symbols.size()));
+                while (answer.equals(wrongAnswer)){
+                    wrongAnswer = getApp().getKatakanas().get(rnd.nextInt(symbols.size()));
+                }
                 q.getQuestionOptions().add(new QuestionOptions(wrongAnswer.getRomaji(), false));
             }
 
@@ -85,12 +88,13 @@ public class ExamFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        exam = createExam();
+
         View rootView = inflater.inflate(R.layout.fragment_carousel, container, false);
 
         mPager = (ViewPager) rootView.findViewById(R.id.pager);
-        mPager.setAdapter(new KatakanaAdapter(getActivity().getSupportFragmentManager(), getApp().getKatakanas()));
-
-        exam = createExam();
+        mPager.setAdapter(new ExamAdapter(getActivity().getSupportFragmentManager(), exam));
 
         return rootView;
     }
@@ -104,13 +108,13 @@ public class ExamFragment extends BaseFragment {
     /*
      * Adapter para percorrer os itens disponiveis no Pager
      */
-    public static class KatakanaAdapter extends FragmentPagerAdapter {
+    public static class ExamAdapter extends FragmentPagerAdapter {
 
-        private final List<KanaSymbol> kanas;
+        private final Exam exam;
 
-        public KatakanaAdapter(FragmentManager fm, List<KanaSymbol> kanas) {
+        public ExamAdapter(FragmentManager fm, Exam exam) {
             super(fm);
-            this.kanas = kanas;
+            this.exam = exam;
         }
 
         @Override
@@ -120,7 +124,7 @@ public class ExamFragment extends BaseFragment {
 
         @Override
         public int getCount() {
-            return kanas.size();
+            return this.exam.getQuestions().size();
         }
 
         @Override
@@ -161,23 +165,27 @@ public class ExamFragment extends BaseFragment {
 
             this.step = getArguments().getInt("step");
 
-            View rootView = inflater.inflate(R.layout.fragment_card, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_question, container, false);
 
-            TextView symbol = (TextView) rootView.findViewById(R.id.symbol);
-            symbol.setText(getApp().getKatakanas().get(step).getKatakana());
-            symbol.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getApp().speak(getApp().getKatakanas().get(step).getKatakana());
-                }
-            });
+            Question q = exam.getQuestions().get(step);
+            TextView question = (TextView) rootView.findViewById(R.id.question);
+            question.setText(q.getText());
 
+            TextView answer1 = (TextView) rootView.findViewById(R.id.answer1);
+            answer1.setText(q.getQuestionOptions().get(0).getText());
 
-//            final int maxHeight=symbol.getHeight();
-//            symbol.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, maxHeight, getResources().getDisplayMetrics()));
+            TextView answer2 = (TextView) rootView.findViewById(R.id.answer2);
+            answer2.setText(q.getQuestionOptions().get(1).getText());
 
-            TextView romaji = (TextView) rootView.findViewById(R.id.romaji);
-            romaji.setText(getApp().getKatakanas().get(step).getRomaji());
+            TextView answer3 = (TextView) rootView.findViewById(R.id.answer3);
+            answer3.setText(q.getQuestionOptions().get(2).getText());
+
+            TextView answer4 = (TextView) rootView.findViewById(R.id.answer4);
+            answer4.setText(q.getQuestionOptions().get(3).getText());
+
+            TextView answer5 = (TextView) rootView.findViewById(R.id.answer5);
+            answer5.setText(q.getQuestionOptions().get(4).getText());
+
 
             return rootView;
         }
