@@ -77,6 +77,8 @@ public class ExamFragment extends BaseFragment {
 
             //shuffle the list of answer
             Collections.shuffle(q.getQuestionOptions());
+
+            exam.getQuestions().add(q);
         }
 
         return exam;
