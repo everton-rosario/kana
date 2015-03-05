@@ -50,15 +50,19 @@ public class MainActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (position == 0){
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, MemorizeFragment.newInstance(position + 1))
-                    .commit();
-        } else if (position == 1){
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, ExamFragment.newInstance(position + 1))
-                    .commit();
-        }
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, ExamFragment.newInstance(position + 1))
+                .commit();
+
+//        if (position == 0){
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.container, MemorizeFragment.newInstance(position + 1))
+//                    .commit();
+//        } else if (position == 1){
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.container, ExamFragment.newInstance(position + 1))
+//                    .commit();
+//        }
     }
 
     public void onSectionAttached(int number) {
