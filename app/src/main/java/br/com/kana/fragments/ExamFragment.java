@@ -5,6 +5,7 @@ package br.com.kana.fragments;
  */
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -139,7 +140,7 @@ public class ExamFragment extends BaseFragment {
     /*
      * Fragment que representa cada card dentro do ViewPager
      */
-    public static class QuestionFragment extends BaseFragment {
+    public static class QuestionFragment extends BaseFragment implements View.OnClickListener {
 
         private int step;
 
@@ -195,6 +196,16 @@ public class ExamFragment extends BaseFragment {
         @Override
         public void onSaveInstanceState(Bundle outState) {
             super.onSaveInstanceState(outState);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int[] answerButtonIds = new int[]{R.id.answer1, R.id.answer2, R.id.answer3, R.id.answer4, R.id.answer5};
+            for(int i = 0; i < 5; i++){
+                TextView answerButton = (TextView) v.findViewById(answerButtonIds[i]);
+                if ()
+                answerButton.setBackgroundColor(Color.GREEN);
+            }
         }
     }
 
