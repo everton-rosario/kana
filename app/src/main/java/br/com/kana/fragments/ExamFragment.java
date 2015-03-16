@@ -201,10 +201,14 @@ public class ExamFragment extends BaseFragment {
         @Override
         public void onClick(View v) {
             int[] answerButtonIds = new int[]{R.id.answer1, R.id.answer2, R.id.answer3, R.id.answer4, R.id.answer5};
+            Question q = exam.getQuestions().get(step);
             for(int i = 0; i < 5; i++){
                 TextView answerButton = (TextView) v.findViewById(answerButtonIds[i]);
-                if ()
-                answerButton.setBackgroundColor(Color.GREEN);
+                if (q.getQuestionOptions().get(i).isCorrect()){
+                    answerButton.setBackgroundColor(Color.GREEN);
+                } else {
+                    answerButton.setBackgroundColor(Color.GREEN);
+                }
             }
         }
     }
